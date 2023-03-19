@@ -1,0 +1,147 @@
+/ # hbase shell
+2023-03-16 17:50:10,648 WARN  [main] util.NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+HBase Shell; enter 'help<RETURN>' for list of supported commands.
+Type "exit<RETURN>" to leave the HBase Shell
+Version 1.3.2, r1bedb5bfbb5a99067e7bc54718c3124f632b6e17, Mon Mar 19 18:47:19 UTC 2018
+
+hbase(main):001:0> create 'Hotel','restaurant','menu'
+0 row(s) in 1.9210 seconds
+
+=> Hbase::Table - Hotel
+hbase(main):002:0> list
+TABLE                                                                                                                                                           
+Hotel                                                                                                                                                          
+1 row(s) in 0.0590 seconds
+
+=> ["family"]
+hbase(main):003:0> put 'Hotel','01','restaurant:name','amman'
+0 row(s) in 0.3020 seconds
+
+hbase(main):004:0> put 'Hotel','01','restaurant:location','rasipuram'
+0 row(s) in 0.0280 seconds
+
+hbase(main):005:0> put 'Hotel','01','restaurant:timing','9am-10pm'
+0 row(s) in 0.0250 seconds
+
+hbase(main):006:0> put 'Hotel','01','menu:name','dosai,idly,puri'
+0 row(s) in 0.0140 seconds
+
+hbase(main):008:0> put 'Hotel','01','menu:price','30,20,25'
+0 row(s) in 0.0300 seconds
+
+hbase(main):009:0> put 'Hotel','01','menu:session','morning'
+0 row(s) in 0.0140 seconds
+
+hbase(main):010:0> put 'Hotel','02','restaurant:name','saravana bavan'
+0 row(s) in 0.0190 seconds
+
+hbase(main):011:0> put 'Hotel','02','restaurant:location','salem'
+0 row(s) in 0.0220 seconds
+
+hbase(main):012:0> put 'Hotel','02','menu:name','rice,sambar,rasam,curd'
+0 row(s) in 0.0270 seconds
+
+hbase(main):013:0> put 'Hotel','02','menu:session','100'
+0 row(s) in 0.0220 seconds
+
+hbase(main):014:0> put 'Hotel','03','restaurant:name','selvi mess'
+0 row(s) in 0.0160 seconds
+
+hbase(main):015:0> put 'Hotel','03','restaurant:timing','9am-11am'
+0 row(s) in 0.0270 seconds
+
+hbase(main):016:0> put 'Hotel','03','menu:name','parota,dosai,idly'
+0 row(s) in 0.0250 seconds
+
+
+
+hbase(main):022:0> get 'Hotel','01'
+COLUMN                                    CELL                                                                                                                  
+ restaurant:name                          timestamp=1678990472589, value=amman                                                                                 
+ restaurant:location                      timestamp=1678990435991, value=rasipuram                                                                               
+ restaurant:timing                        timestamp=1678990078779, value=9am-10pm                                                                              
+ menu:name                                timestamp=1678990151721, value=dosai,idly,puri                                                                      
+ menu:price                               timestamp=1678990107273, value=30,20,25                                                                             
+ menu:session                             timestamp=1678989957023, value=morning                                                                               
+                                                                               
+1 row(s) in 0.1660 seconds
+
+hbase(main):023:0> get 'Hotel','02'
+COLUMN                                    CELL                                                                                                                  
+ restaurant:name                          timestamp=1678990877495, value=saravana bavan                                                                                 
+ restaurant:location                      timestamp=1678990697077, value=salem
+ menu:name                                timestamp=1678990789753, value=rice,sambar,rasam,curd                                                                             
+ menu:session                             timestamp=1678990632340, value=100                                                                                    
+1 row(s) in 0.0490 seconds
+
+hbase(main):024:0> get 'Hotel','03'
+COLUMN                                    CELL                                                                                                                  
+ restaurant:name                          timestamp=1678991191832, value=selvi mess                                                                               
+ restaurant:timing                          timestamp=1678991043431, value=9am-11am                                                                            
+ menu:name                             timestamp=1678990957427, value=parota,dosai,idly                                                                             
+                                                                              
+1 row(s) in 0.0720 seconds
+
+hbase(main):025:0> scan 'Hotel'
+ROW                                       COLUMN+CELL                                                                                                           
+ 01                                       column=restaurant:name,timestamp=1678990472589, value=amman                                                       
+ 01                                       column=restaurant:location,timestamp=1678990435991, value=rasipuram                                                        
+ 01                                       column=restaurant:timing,timestamp=1678990078779, value=9am-10pm                                                       
+ 01                                       column= menu:name,timestamp=1678990151721, value=dosai,idly,puri                                               
+ 01                                       column= menu:price,timestamp=1678990107273, value=30,20,25                                                   
+ 01                                       column=menu:session,timestamp=1678989957023, value=morning                                                           
+ 02                                       column=restaurant:name,timestamp=1678990877495, value=saravana bavan                                                      
+ 02                                       column=restaurant:location,timestamp=1678990697077, value=salem                                                      
+ 02                                       column= menu:name,timestamp=1678990789753, value=rice,sambar,rasam,curd                                                       
+ 02                                       column= menu:session,timestamp=1678990632340, value=100                                                  
+ 03                                       column=restaurant:name,timestamp=1678991191832, value=selvi mess                                                    
+ 03                                       column= restaurant:timing,timestamp=1678991043431, value=9am-11am
+ 03                                                                                        
+3 row(s) in 0.2030 seconds
+
+hbase(main):026:0> put 'Hotel','02','restaurant:branch','namakkal'
+0 row(s) in 0.0180 seconds
+
+hbase(main):026:0> delete  'Hotel','02','menu:session'
+0 row(s) in 0.0180 seconds
+
+hbase(main):027:0> get 'Hotel','02'
+COLUMN                                    CELL                                                                                                                  
+ restaurant:name                          timestamp=1678990877495, value=saravana bavan                                                                                 
+ restaurant:location                      timestamp=1678990697077, value=salem
+ menu:name                                timestamp=1678990789753, value=rice,sambar,rasam,curd                                                                             
+ restaurant:branch                        timestamp=1678990632340, value=100  1 row(s) in 0.0900 seconds
+
+
+hbase(main):030:0> put 'Hotel','03','restaurant:timing','10am-11pm'
+0 row(s) in 0.0870 seconds
+
+hbase(main):030:0> put 'Hotel','03','menu:discount','10%'
+0 row(s) in 0.0870 seconds
+
+hbase(main):031:0> get 'Hotel','03'
+COLUMN                                    CELL                                                                                                                  
+ restaurant:name                          timestamp=1678991191832, value=selvi mess                                                                               
+ restaurant:timing                          timestamp=1678991043431, value=9am-11am                                                                            
+ menu:name                             timestamp=1678990957427, value=parota,dosai,idly  
+ menu:discount                          timestamp=1678990789753, value=10%                                              
+1 row(s) in 0.0540 seconds
+
+hbase(main):032:0> scan 'Hotel'
+ROW                                       COLUMN+CELL                                                                                                           
+01                                       column=restaurant:location,timestamp=1678990435991, value=rasipuram                                                        
+ 01                                       column=restaurant:timing,timestamp=1678990078779, value=9am-10pm                                                       
+ 01                                       column= menu:name,timestamp=1678990151721, value=dosai,idly,puri                                               
+ 01                                       column= menu:price,timestamp=1678990107273, value=30,20,25                                                   
+ 01                                       column=menu:session,timestamp=1678989957023, value=morning                                                           
+ 02                                       column=restaurant:name,timestamp=1678990877495, value=saravana bavan                                                      
+ 02                                       column=restaurant:location,timestamp=1678990697077, value=salem                                                      
+ 02                                       column= menu:name,timestamp=1678990789753, value=rice,sambar,rasam,curd                                                       
+ 02                                       column= menu:session,timestamp=1678990632340, value=100  
+ 02                                        column=restaurant:branch,timestamp=1678990632340, value=namakkal
+ 03                                       column=restaurant:name,timestamp=1678991191832, value=selvi mess                                                    
+ 03                                       column= restaurant:timing,timestamp=1678991043431, value=10am-11pm                                                                             
+ 03                                       column= menu:discount,timestamp=1678990789753, value=10%                                                                       
+3 row(s) in 0.1440 seconds
+
+hbase(main):033:0> 
